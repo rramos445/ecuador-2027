@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Formativa en Línea | Carrera Agropecuaria</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter y Merriweather para toque académico -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <!-- Configuración personalizada de Tailwind para paleta agrícola/institucional -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        forest: {
+                            50: '#f2f7f4',
+                            100: '#e0ece4',
+                            200: '#c3d9cb',
+                            300: '#9abca8',
+                            400: '#6e9b82',
+                            500: '#4d7e64',
+                            600: '#39644e',
+                            700: '#2d503f',
+                            800: '#254033',
+                            900: '#1f352b',
+                            950: '#101d17',
+                        },
+                        cream: {
+                            50: '#fdfcf9',
+                            100: '#f9f6ee',
+                            200: '#f1ead8',
+                            300: '#e5d8b8',
+                        },
+                        gold: {
+                            400: '#eab308',
+                            500: '#ca8a04',
+                            600: '#a16207',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos utilitarios mínimos para transiciones suaves y scrollbar */
+        body {
+            background-color: #f9f6ee;
+            color: #1e293b;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Ocultar barras de desplazamiento innecesarias en navegadores modernos manteniendo funcionalidad */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-forest-200 selection:text-forest-900">
+
+    <!-- ENCABEZADO INSTITUCIONAL -->
+    <header class="bg-forest-900 text-cream-50 shadow-md border-b-4 border-gold-500 sticky top-0 z-30">
+        <div class="max-w-6xl mx-auto px-4 py-3.5 sm:px-6 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <!-- Icono botánico / agrícola SVG -->
+                <div class="bg-forest-800 p-2 rounded-xl border border-forest-700 text-gold-400 shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V9m0 0c0-3.5 3-6 6.5-6 0 3.5-2.5 6-6.5 6zm0 0c0-3.5-3-6-6.5-6 0 3.5 2.5 6 6.5 6zm-4 10h8" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-forest-200 font-semibold block">Evaluación Formativa en Línea</span>
+                    <h1 class="font-serif text-base sm:text-lg font-bold text-white leading-tight">Carrera Agropecuaria</h1>
+                </div>
+            </div>
+
+            <!-- Indicador de estado en cabecera (visible durante la prueba) -->
+            <div id="header-status" class="hidden items-center gap-3 sm:gap-4">
+                <div id="mode-badge" class="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-forest-800 text-forest-100 border border-forest-700">
+                    Modo Estudio
+                </div>
+                <!-- Temporizador para Modo Examen -->
+                <div id="timer-box" class="hidden items-center gap-2 bg-slate-900/80 px-3.5 py-1.5 rounded-xl border border-gold-500/50 text-gold-400 font-mono font-bold text-sm sm:text-base shadow-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span id="timer-display">20:00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 sm:px-6 sm:py-8">
+
+        <!-- ========================================== -->
+        <!-- PANTALLA 1: BIENVENIDA Y CONFIGURACIÓN     -->
+        <!-- ========================================== -->
+        <section id="welcome-screen" class="max-w-3xl mx-auto fade-in">
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200/80 overflow-hidden">
+                <!-- Banner superior de tarjeta -->
+                <div class="bg-gradient-to-r from-forest-800 to-forest-700 px-6 py-7 sm:px-8 text-white">
+                    <div class="inline-block px-3 py-1 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-300 text-xs font-semibold mb-3">
+                        Asignatura
+                    </div>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold mb-2">
+                        Fundamentos de la Producción Agrícola
+                    </h2>
+                    <p class="text-forest-100 text-sm sm:text-base leading-relaxed">
+                        Simulador de Evaluación: <span class="font-semibold text-white">El proceso de domesticación en las plantas</span> • Docente: <span class="font-semibold text-white">Ing. Rommel Ramos Remache</span>
+                    </p>
+                </div>
+
+                <!-- Cuerpo de configuración -->
+                <div class="p-6 sm:p-8 space-y-6">
+                    <!-- Datos del estudiante -->
+                    <div class="bg-cream-50 p-4 sm:p-5 rounded-xl border border-cream-200 space-y-4">
+                        <h3 class="text-sm font-bold text-forest-900 uppercase tracking-wide flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-forest-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            Identificación del Estudiante (Opcional)
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="student-name" class="block text-xs font-semibold text-slate-600 mb-1">Nombre completo</label>
+                                <input type="text" id="student-name" placeholder="Ej. Ana María López" 
+                                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-forest-600 focus:border-transparent transition">
+                            </div>
+                            <div>
+                                <label for="student-id" class="block text-xs font-semibold text-slate-600 mb-1">Módulo / Paralelo</label>
+                                <input type="text" id="student-id" placeholder="Ej. Módulo 1 / Paralelo A" 
+                                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-forest-600 focus:border-transparent transition">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selector de Modo de Práctica -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-bold text-forest-900 uppercase tracking-wide">
+                            1. Selecciona la modalidad del simulador
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Opción A: Modo Estudio -->
+                            <label class="relative cursor-pointer group">
+                                <input type="radio" name="sim-mode" value="study" class="peer sr-only" checked>
+                                <div class="h-full p-5 rounded-xl border-2 border-slate-200 bg-white peer-checked:border-forest-600 peer-checked:bg-forest-50/60 hover:border-forest-300 transition-all">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="inline-flex items-center gap-1.5 font-bold text-forest-900 text-base">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-forest-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                            </svg>
+                                            Modo Estudio
+                                        </span>
+                                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-forest-100 text-forest-800">Sin límite de tiempo</span>
+                                    </div>
+                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                        <strong>Retroalimentación inmediata:</strong> Al seleccionar una opción verás al instante si es correcta o incorrecta junto con su justificación académica basada en el artículo.
+                                    </p>
+                                </div>
+                            </label>
+
+                            <!-- Opción B: Modo Examen -->
+                            <label class="relative cursor-pointer group">
+                                <input type="radio" name="sim-mode" value="exam" class="peer sr-only">
+                                <div class="h-full p-5 rounded-xl border-2 border-slate-200 bg-white peer-checked:border-gold-600 peer-checked:bg-amber-50/40 hover:border-amber-300 transition-all">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="inline-flex items-center gap-1.5 font-bold text-slate-900 text-base">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            Modo Examen
+                                        </span>
+                                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">20:00 min</span>
+                                    </div>
+                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                        <strong>Simulacro real:</strong> Cronómetro activo de 20 minutos, navegación libre para cambiar respuestas y calificación final detallada al entregar el examen.
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Opciones de Aleatorización -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <span class="text-sm font-bold text-slate-800 block">Aleatorizar orden de preguntas y opciones</span>
+                            <span class="text-xs text-slate-500">Mezcla el orden de los 15 reactivos y sus 4 alternativas antes de iniciar.</span>
+                        </div>
+                        <label class="inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="randomize-toggle" class="sr-only peer">
+                            <div class="relative w-12 h-6 bg-slate-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-forest-500 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-forest-600"></div>
+                            <span id="randomize-label" class="ms-2.5 text-xs font-semibold text-slate-700">Desactivado</span>
+                        </label>
+                    </div>
+
+                    <!-- Botón Iniciar -->
+                    <div class="pt-2">
+                        <button id="start-btn" type="button" 
+                            class="w-full py-3.5 px-6 rounded-xl bg-forest-700 hover:bg-forest-800 active:bg-forest-900 text-white font-bold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+                            <span>Comenzar Simulador</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PANTALLA 2: INTERFAZ DEL SIMULADOR         -->
+        <!-- ========================================== -->
+        <section id="quiz-screen" class="hidden fade-in">
+            <!-- Barra superior de progreso -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-bold text-forest-900" id="progress-question-text">Pregunta 1 de 15</span>
+                        <span class="text-xs text-slate-400">•</span>
+                        <span class="text-xs font-medium text-slate-600" id="progress-answered-text">0 respondidas</span>
+                    </div>
+                    <span class="text-xs font-bold text-forest-700" id="progress-percent-text">0% completado</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                    <div id="progress-bar" class="bg-forest-600 h-2.5 rounded-full transition-all duration-300" style="width: 6.66%"></div>
+                </div>
+            </div>
+
+            <!-- Grid principal: Tarjeta de Pregunta + Panel de Navegación -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                
+                <!-- Columna Izquierda (8 cols): Pregunta y Opciones -->
+                <div class="lg:col-span-8 bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+                    <!-- Cabecera de la pregunta -->
+                    <div class="bg-cream-50 px-5 py-4 sm:px-7 border-b border-cream-200 flex flex-wrap items-center justify-between gap-3">
+                        <span id="question-badge" class="inline-flex items-center px-3 py-1 rounded-lg bg-forest-100 text-forest-800 text-xs font-bold">
+                            Reactivo #1
+                        </span>
+                        <button id="flag-btn" type="button" 
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border border-slate-300 bg-white text-slate-700 hover:bg-amber-50 hover:border-amber-400 hover:text-amber-800 transition cursor-pointer">
+                            <svg id="flag-icon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                            </svg>
+                            <span id="flag-text">Marcar para revisar</span>
+                        </button>
+                    </div>
+
+                    <!-- Enunciado y Opciones -->
+                    <div class="p-5 sm:p-7">
+                        <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed mb-6">
+                            <!-- Texto dinámico de la pregunta -->
+                        </h2>
+
+                        <!-- Contenedor de 4 opciones -->
+                        <div id="options-container" class="space-y-3">
+                            <!-- Opciones generadas dinámicamente -->
+                        </div>
+
+                        <!-- Caja de Retroalimentación (Visible en Modo Estudio tras responder) -->
+                        <div id="feedback-box" class="hidden mt-6 p-4 sm:p-5 rounded-xl border-l-4 transition-all">
+                            <div class="flex items-start gap-3">
+                                <div id="feedback-icon" class="shrink-0 mt-0.5"></div>
+                                <div>
+                                    <h4 id="feedback-title" class="font-bold text-sm sm:text-base mb-1"></h4>
+                                    <p id="feedback-explanation" class="text-xs sm:text-sm leading-relaxed"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controles inferiores Anterior / Siguiente -->
+                    <div class="bg-slate-50 px-5 py-4 sm:px-7 border-t border-slate-200 flex items-center justify-between gap-3">
+                        <button id="prev-btn" type="button" 
+                            class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:pointer-events-none font-semibold text-sm transition cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Anterior
+                        </button>
+
+                        <button id="next-btn" type="button" 
+                            class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-forest-700 hover:bg-forest-800 text-white font-semibold text-sm shadow-sm transition cursor-pointer">
+                            <span>Siguiente</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha (4 cols): Mapa de Navegación Rápida -->
+                <aside class="lg:col-span-4 bg-white rounded-2xl shadow-md border border-slate-200 p-5 space-y-5">
+                    <div>
+                        <h3 class="text-sm font-bold text-forest-900 uppercase tracking-wide mb-1">Navegación Rápida</h3>
+                        <p class="text-xs text-slate-500">Haz clic en cualquier número para saltar al reactivo.</p>
+                    </div>
+
+                    <!-- Cuadrícula de botones 1 al 15 -->
+                    <div id="nav-grid" class="grid grid-cols-5 gap-2">
+                        <!-- Botones generados dinámicamente -->
+                    </div>
+
+                    <!-- Leyenda de estados -->
+                    <div class="pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs text-slate-600">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3.5 h-3.5 rounded bg-forest-600 inline-block shrink-0"></span>
+                            <span>Respondida</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3.5 h-3.5 rounded bg-slate-100 border border-slate-300 inline-block shrink-0"></span>
+                            <span>Pendiente</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3.5 h-3.5 rounded bg-amber-100 border-2 border-amber-500 inline-block shrink-0"></span>
+                            <span>Marcada</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3.5 h-3.5 rounded ring-2 ring-forest-800 bg-white inline-block shrink-0"></span>
+                            <span>Actual</span>
+                        </div>
+                    </div>
+
+                    <!-- Botón Finalizar Evaluación -->
+                    <div class="pt-2">
+                        <button id="finish-btn" type="button" 
+                            class="w-full py-3 px-4 rounded-xl bg-gold-600 hover:bg-gold-500 text-white font-bold text-sm shadow transition cursor-pointer flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Finalizar y Calificar
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PANTALLA 3: RESULTADOS Y REVISIÓN          -->
+        <!-- ========================================== -->
+        <section id="results-screen" class="hidden max-w-4xl mx-auto space-y-6 fade-in">
+            <!-- Tarjeta Resumen de Calificación -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                <div class="bg-forest-900 px-6 py-6 sm:px-8 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs uppercase tracking-wider text-forest-300 font-semibold">Reporte Oficial de Desempeño</span>
+                        <h2 class="font-serif text-2xl font-bold mt-1">Resultados de la Evaluación</h2>
+                        <p id="result-student-info" class="text-sm text-forest-100 mt-1"></p>
+                    </div>
+                    <div id="performance-badge" class="self-start sm:self-center px-4 py-2 rounded-xl font-bold text-sm border">
+                        <!-- Badge dinámico -->
+                    </div>
+                </div>
+
+                <!-- Métricas numéricas -->
+                <div class="p-6 sm:p-8">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-cream-50 p-4 rounded-xl border border-cream-200 text-center">
+                            <span class="text-xs font-semibold text-slate-500 uppercase block mb-1">Calificación (0-10)</span>
+                            <span id="score-ten" class="text-2xl sm:text-3xl font-extrabold text-forest-800">0.0</span>
+                        </div>
+                        <div class="bg-cream-50 p-4 rounded-xl border border-cream-200 text-center">
+                            <span class="text-xs font-semibold text-slate-500 uppercase block mb-1">Porcentaje</span>
+                            <span id="score-percent" class="text-2xl sm:text-3xl font-extrabold text-forest-700">0%</span>
+                        </div>
+                        <div class="bg-emerald-50/70 p-4 rounded-xl border border-emerald-200 text-center">
+                            <span class="text-xs font-semibold text-emerald-700 uppercase block mb-1">Aciertos / Errores</span>
+                            <div class="text-xl sm:text-2xl font-extrabold">
+                                <span id="score-correct" class="text-emerald-700">0</span>
+                                <span class="text-slate-400 text-base mx-1">/</span>
+                                <span id="score-incorrect" class="text-rose-600">0</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs font-semibold text-slate-500 uppercase block mb-1">Tiempo Empleado</span>
+                            <span id="time-used" class="text-xl sm:text-2xl font-extrabold text-slate-800">00:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción en resultados -->
+                    <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                        <button id="copy-results-btn" type="button" 
+                            class="w-full sm:w-auto flex-1 py-3 px-5 rounded-xl bg-forest-700 hover:bg-forest-800 text-white font-bold text-sm shadow transition cursor-pointer flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                            <span>Copiar Resumen de Resultados</span>
+                        </button>
+
+                        <button id="restart-btn" type="button" 
+                            class="w-full sm:w-auto flex-1 py-3 px-5 rounded-xl border-2 border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm transition cursor-pointer flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            <span>Reiniciar Simulador</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desglose Detallado Pregunta por Pregunta -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between px-1">
+                    <h3 class="font-serif text-lg sm:text-xl font-bold text-forest-900">Revisión Detallada de Reactivos</h3>
+                    <span class="text-xs font-medium text-slate-500">15 preguntas evaluadas</span>
+                </div>
+                <div id="detailed-review-list" class="space-y-4">
+                    <!-- Tarjetas de revisión generadas dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL PERSONALIZADO (Reemplazo seguro de alert/confirm) -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 fade-in">
+            <h3 id="modal-title" class="text-lg font-bold text-slate-900 mb-2">Confirmar entrega</h3>
+            <p id="modal-body" class="text-sm text-slate-600 leading-relaxed mb-6"></p>
+            <div id="modal-actions" class="flex items-center justify-end gap-3">
+                <button id="modal-cancel-btn" type="button" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-sm font-semibold cursor-pointer">
+                    Cancelar
+                </button>
+                <button id="modal-confirm-btn" type="button" class="px-4 py-2 rounded-xl bg-forest-700 hover:bg-forest-800 text-white text-sm font-semibold cursor-pointer">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICACIÓN TOAST FLOTANTE -->
+    <div id="toast-notification" class="hidden fixed bottom-5 right-5 z-50 bg-forest-900 text-white px-4 py-3 rounded-xl shadow-lg border border-forest-700 text-sm font-medium flex items-center gap-2.5 fade-in">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span id="toast-message">Acción completada</span>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="bg-white border-t border-slate-200 py-4 px-4 text-center text-xs text-slate-500 mt-auto">
+        <p>Evaluación Formativa en Línea • Carrera Agropecuaria • Docente: <strong>Ing. Rommel Ramos Remache</strong></p>
+    </footer>
+
+    <!-- LÓGICA DE LA APLICACIÓN -->
+    <script>
+        /**
+         * Banco de 15 reactivos exactos sobre El proceso de domesticación en las plantas.
+         */
+        const ORIGINAL_QUESTIONS = [
+            {
+                id: 1,
+                question: "Según la información presentada en el texto, ¿en qué época geológica surge la agricultura?",
+                options: [
+                    { text: "En el Holoceno, hace aproximadamente 10,000 años.", isCorrect: true },
+                    { text: "En el Pleistoceno tardío, hace aproximadamente 25,000 años.", isCorrect: false },
+                    { text: "En el Mioceno, hace aproximadamente 50,000 años.", isCorrect: false },
+                    { text: "En el Plioceno, hace aproximadamente 5,000 años.", isCorrect: false }
+                ],
+                explanation: "Las evidencias indican que la agricultura surge en el Holoceno (hace unos 10,000 años), periodo con un clima más estable en comparación con el Pleistoceno."
+            },
+            {
+                id: 2,
+                question: "¿Cuál es considerada la primera región donde apareció de forma independiente la agricultura y la domesticación de plantas?",
+                options: [
+                    { text: "El Creciente Fértil.", isCorrect: true },
+                    { text: "Mesoamérica.", isCorrect: false },
+                    { text: "La región de los Andes y la Amazonia.", isCorrect: false },
+                    { text: "El Este de los Estados Unidos de América.", isCorrect: false }
+                ],
+                explanation: "Aparece primero en el Medio Oriente (Creciente Fértil) entre 9,600 y 8,500 a.n.e."
+            },
+            {
+                id: 3,
+                question: "¿Qué cultivos fueron los primeros cereales domesticados en el Creciente Fértil?",
+                options: [
+                    { text: "El trigo y la cebada.", isCorrect: true },
+                    { text: "El arroz y la soja.", isCorrect: false },
+                    { text: "El sorgo y el teff.", isCorrect: false },
+                    { text: "El maíz y el quenopodio.", isCorrect: false }
+                ],
+                explanation: "En el Medio Oriente se domesticaron inicialmente Triticum monococcum, Triticum dicoccum (trigo) y Hordeum vulgare (cebada)."
+            },
+            {
+                id: 4,
+                question: "¿Cuáles fueron las principales plantas domesticadas en la región de Mesoamérica según el texto?",
+                options: [
+                    { text: "El maíz, el frijol y la calabaza.", isCorrect: true },
+                    { text: "La papa, la mandioca y el girasol.", isCorrect: false },
+                    { text: "La caña de azúcar, el plátano y el ñame.", isCorrect: false },
+                    { text: "El café, el sorgo y el arroz africano.", isCorrect: false }
+                ],
+                explanation: "En Mesoamérica (hace aprox. 3,500 a.n.e.) se domesticaron Zea mays (maíz), Phaseolus lunatus y P. vulgaris (frijol) y Cucurbita pepo (calabaza)."
+            },
+            {
+                id: 5,
+                question: "De acuerdo con Braidwood (1960), ¿cuál es la diferencia fundamental entre la recolección de plantas y la agricultura?",
+                options: [
+                    { text: "La recolección implica cosechar productos naturales y la agricultura transforma la naturaleza para controlar recursos.", isCorrect: true },
+                    { text: "La recolección requiere irrigación artificial y la agricultura depende exclusivamente de las lluvias.", isCorrect: false },
+                    { text: "La recolección solo aprovecha especies anuales y la agricultura se enfoca en especies perennes.", isCorrect: false },
+                    { text: "La recolección modifica el genotipo de las plantas y la agricultura mantiene intacta su genética silvestre.", isCorrect: false }
+                ],
+                explanation: "Braidwood (1960) señala que recolectar es cosechar directamente productos naturales, mientras que la agricultura transforma la naturaleza para controlar la disponibilidad de los recursos."
+            },
+            {
+                id: 6,
+                question: "¿En qué consisten los sistemas silvícolas según las evidencias citadas por Casas y colaboradores (1997)?",
+                options: [
+                    { text: "En la manipulación de poblaciones silvestres mediante quemas o talas para optimizar su aprovechamiento.", isCorrect: true },
+                    { text: "En el cultivo exclusivo de árboles frutales en parcelas irrigadas y cercadas.", isCorrect: false },
+                    { text: "En la modificación genética en laboratorio de especies forestales para uso maderable.", isCorrect: false },
+                    { text: "En la recolección pasiva de frutos caídos sin ningún tipo de perturbación ambiental.", isCorrect: false }
+                ],
+                explanation: "Los sistemas silvícolas manipulan poblaciones o comunidades silvestres (mediante quemas, talas intensivas o manejo de agua) para promover la abundancia de ciertas plantas."
+            },
+            {
+                id: 7,
+                question: "¿Cuál es la distinción conceptual que hace el texto entre 'cultivo' y 'domesticación'?",
+                options: [
+                    { text: "Cultivo agrupa las formas de manejo agronómico; domesticación es un proceso evolutivo de selección genética.", isCorrect: true },
+                    { text: "Cultivo se aplica únicamente a cereales y domesticación exclusivamente a especies animales.", isCorrect: false },
+                    { text: "Cultivo es un proceso inconsciente y domesticación requiere conocimientos de biología molecular.", isCorrect: false },
+                    { text: "Cultivo ocurre en ambientes silvestres y domesticación solo se da en invernaderos.", isCorrect: false }
+                ],
+                explanation: "El cultivo comprende formas de manejo de poblaciones vegetales, mientras que la domesticación es un proceso evolutivo continuo de manipulación y selección genética (Gepts, 2004a)."
+            },
+            {
+                id: 8,
+                question: "¿Quién describió por primera vez cómo opera la selección artificial favoreciendo variantes deseables en plantas y animales?",
+                options: [
+                    { text: "Charles Darwin.", isCorrect: true },
+                    { text: "Jared Diamond.", isCorrect: false },
+                    { text: "Carl O. Sauer.", isCorrect: false },
+                    { text: "David Rindos.", isCorrect: false }
+                ],
+                explanation: "Charles Darwin en sus obras de 1859 y 1868 describió por primera vez cómo opera la selección artificial favoreciendo variantes deseables y eliminando las indeseables."
+            },
+            {
+                id: 9,
+                question: "¿Qué se entiende por 'síndrome de la domesticación' en el contexto del artículo?",
+                options: [
+                    { text: "El conjunto de rasgos morfológicos y fisiológicos comunes que cambian en las plantas al ser domesticadas.", isCorrect: true },
+                    { text: "El incremento de enfermedades contagiosas en los humanos tras adoptar el sedentarismo.", isCorrect: false },
+                    { text: "La incapacidad de las semillas silvestres para germinar en suelos agrícolas fertilizados.", isCorrect: false },
+                    { text: "El conjunto de plagas y patógenos que atacan exclusivamente a los monocultivos modernos.", isCorrect: false }
+                ],
+                explanation: "Se denomina síndrome de la domesticación al conjunto de cambios comunes en diversos rasgos morfológicos, fisiológicos y genéticos que diferencian a las plantas cultivadas de sus parientes silvestres."
+            },
+            {
+                id: 10,
+                question: "¿Qué cambio anatómico característico del síndrome de domesticación impide que la semilla madura se desprenda sola de la planta?",
+                options: [
+                    { text: "La pérdida de los mecanismos de dispersión debido a la falta de una zona de abscisión.", isCorrect: true },
+                    { text: "El engrosamiento de la cutícula foliar y la reducción de los estomas.", isCorrect: false },
+                    { text: "La lignificación temprana de las raíces secundarias antes de la floración.", isCorrect: false },
+                    { text: "El aumento en la producción de metabolitos secundarios tóxicos en el fruto.", isCorrect: false }
+                ],
+                explanation: "Un rasgo clave es la pérdida de mecanismos naturales de dispersión por la ausencia de una zona de abscisión, facilitando que el humano coseche los granos sin que caigan al suelo."
+            },
+            {
+                id: 11,
+                question: "¿Cómo evoluciona la latencia de las semillas en las plantas cultivadas en comparación con sus parientes silvestres?",
+                options: [
+                    { text: "Se pierde o reduce para garantizar una germinación rápida y uniforme.", isCorrect: true },
+                    { text: "Se prolonga durante varios años para resistir periodos extremos de sequía.", isCorrect: false },
+                    { text: "Se vuelve dependiente de incendios forestales periódicos para activar el embrión.", isCorrect: false },
+                    { text: "Se mantiene idéntica a la de sus ancestros silvestres para evitar la competencia intraespecífica.", isCorrect: false }
+                ],
+                explanation: "Las plantas domesticadas pierden la latencia de las semillas para lograr una germinación rápida y uniforme, permitiendo que el cultivo se establezca antes de competir con malezas."
+            },
+            {
+                id: 12,
+                question: "A nivel de arquitectura de la planta, ¿cuál es una modificación típica provocada por la selección de un mayor índice de cosecha?",
+                options: [
+                    { text: "La reducción o supresión de las ramificaciones laterales.", isCorrect: true },
+                    { text: "La multiplicación excesiva de tallos delgados y rastreros.", isCorrect: false },
+                    { text: "La disminución drástica del tamaño de los órganos cosechados.", isCorrect: false },
+                    { text: "La floración asincrónica a lo largo de todo el ciclo anual.", isCorrect: false }
+                ],
+                explanation: "La selección hacia un mayor índice de cosecha (razón de biomasa cosechada respecto al total) suele reducir o suprimir las ramas laterales y concentrar los recursos en los órganos de interés."
+            },
+            {
+                id: 13,
+                question: "Con base en la Figura 3 del texto, ¿cuál es el pariente silvestre del cual deriva la planta de maíz (Zea mays)?",
+                options: [
+                    { text: "El teocintle.", isCorrect: true },
+                    { text: "El sorgo silvestre.", isCorrect: false },
+                    { text: "El quenopodio.", isCorrect: false },
+                    { text: "El triticale.", isCorrect: false }
+                ],
+                explanation: "La Figura 3 ilustra la transición evolutiva desde el teocintle (pariente silvestre anual Zea mays parviglumis y perenne Zea diploperennis) hasta el maíz cultivado moderno."
+            },
+            {
+                id: 14,
+                question: "Comparado con el maíz moderno, ¿qué características morfológicas presenta el teocintle en sus estructuras reproductivas?",
+                options: [
+                    { text: "Numerosas espigas pequeñas con una sola hilera de granos triangulares.", isCorrect: true },
+                    { text: "Una o dos mazorcas grandes con múltiples hileras de granos cuadrangulares.", isCorrect: false },
+                    { text: "Inflorescencias subterráneas desprovistas de brácteas protectoras.", isCorrect: false },
+                    { text: "Vainas dehiscentes con semillas aladas adaptadas a la dispersión por viento.", isCorrect: false }
+                ],
+                explanation: "Cada individuo de teocintle presenta varios tallos delgados con numerosas espigas pequeñas (6-7 cm) de una sola hilera de granos de aspecto triangular, muy distintos al grano cuadrangular del maíz."
+            },
+            {
+                id: 15,
+                question: "¿Qué desventaja o vulnerabilidad suelen presentar las plantas domesticadas al ser comparadas con sus parientes silvestres?",
+                options: [
+                    { text: "Pérdida o reducción de los mecanismos naturales de defensa contra enemigos naturales.", isCorrect: true },
+                    { text: "Incapacidad total para realizar fotosíntesis en ambientes con alta radiación solar.", isCorrect: false },
+                    { text: "Pérdida de la sincronización en la maduración de sus frutos y semillas.", isCorrect: false },
+                    { text: "Reducción extrema en el tamaño de sus semillas y órganos de reserva.", isCorrect: false }
+                ],
+                explanation: "Muchos cultivos domesticados presentan una pérdida o reducción de sus mecanismos de defensa (físicos o químicos) contra herbívoros y patógenos en comparación con sus parientes silvestres."
+            }
+        ];
+
+        // Estado global de la aplicación
+        const state = {
+            mode: 'study', // 'study' | 'exam'
+            randomize: false,
+            studentName: '',
+            studentId: '',
+            questions: [],
+            currentIndex: 0,
+            userAnswers: {}, // { questionIndex: selectedOptionIndex }
+            flagged: {},     // { questionIndex: boolean }
+            startTime: null,
+            endTime: null,
+            timerInterval: null,
+            examDurationSeconds: 20 * 60, // 20 minutos
+            remainingSeconds: 20 * 60,
+            isFinished: false
+        };
+
+        // Referencias DOM principales
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const headerStatus = document.getElementById('header-status');
+        const modeBadge = document.getElementById('mode-badge');
+        const timerBox = document.getElementById('timer-box');
+        const timerDisplay = document.getElementById('timer-display');
+
+        // Algoritmo Fisher-Yates para mezclar arreglos
+        function shuffleArray(array) {
+            const copy = [...array];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        // Formatear segundos a MM:SS
+        function formatTime(totalSeconds) {
+            const mins = Math.floor(Math.max(0, totalSeconds) / 60);
+            const secs = Math.max(0, totalSeconds) % 60;
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // Mostrar notificación toast temporal
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Modal personalizado (evita el uso de alert / confirm)
+        function showModal({ title, body, confirmText = 'Confirmar', showCancel = true, onConfirm }) {
+            const modal = document.getElementById('custom-modal');
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').textContent = body;
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+
+            confirmBtn.textContent = confirmText;
+            cancelBtn.style.display = showCancel ? 'inline-flex' : 'none';
+
+            modal.classList.remove('hidden');
+
+            const cleanup = () => {
+                modal.classList.add('hidden');
+                confirmBtn.onclick = null;
+                cancelBtn.onclick = null;
+            };
+
+            confirmBtn.onclick = () => {
+                cleanup();
+                if (onConfirm) onConfirm();
+            };
+
+            cancelBtn.onclick = () => {
+                cleanup();
+            };
+        }
+
+        // Toggle etiqueta de aleatorización
+        const randomizeToggle = document.getElementById('randomize-toggle');
+        const randomizeLabel = document.getElementById('randomize-label');
+        randomizeToggle.addEventListener('change', (e) => {
+            randomizeLabel.textContent = e.target.checked ? 'Activado' : 'Desactivado';
+        });
+
+        // Iniciar el simulador
+        document.getElementById('start-btn').addEventListener('click', () => {
+            const selectedMode = document.querySelector('input[name="sim-mode"]:checked').value;
+            state.mode = selectedMode;
+            state.randomize = randomizeToggle.checked;
+            state.studentName = document.getElementById('student-name').value.trim();
+            state.studentId = document.getElementById('student-id').value.trim();
+
+            // Preparar preguntas y opciones
+            let preparedQuestions = ORIGINAL_QUESTIONS.map(q => ({
+                ...q,
+                options: state.randomize ? shuffleArray(q.options) : [...q.options]
+            }));
+
+            if (state.randomize) {
+                preparedQuestions = shuffleArray(preparedQuestions);
+            }
+
+            state.questions = preparedQuestions;
+            state.currentIndex = 0;
+            state.userAnswers = {};
+            state.flagged = {};
+            state.isFinished = false;
+            state.startTime = Date.now();
+            state.remainingSeconds = state.examDurationSeconds;
+
+            // Configurar cabecera
+            headerStatus.classList.remove('hidden');
+            headerStatus.classList.add('flex');
+
+            if (state.mode === 'exam') {
+                modeBadge.textContent = 'Modo Examen';
+                modeBadge.className = 'hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/40';
+                timerBox.classList.remove('hidden');
+                timerBox.classList.add('flex');
+                startExamTimer();
+            } else {
+                modeBadge.textContent = 'Modo Estudio';
+                modeBadge.className = 'hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-forest-800 text-forest-100 border border-forest-700';
+                timerBox.classList.add('hidden');
+                timerBox.classList.remove('flex');
+            }
+
+            // Cambiar de pantalla
+            welcomeScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+
+            renderNavGrid();
+            renderQuestion();
+        });
+
+        // Temporizador de Modo Examen
+        function startExamTimer() {
+            clearInterval(state.timerInterval);
+            timerDisplay.textContent = formatTime(state.remainingSeconds);
+
+            state.timerInterval = setInterval(() => {
+                state.remainingSeconds--;
+                timerDisplay.textContent = formatTime(state.remainingSeconds);
+
+                // Alerta visual en los últimos 2 minutos
+                if (state.remainingSeconds <= 120) {
+                    timerBox.classList.remove('text-gold-400', 'border-gold-500/50');
+                    timerBox.classList.add('text-rose-400', 'border-rose-500');
+                }
+
+                if (state.remainingSeconds <= 0) {
+                    clearInterval(state.timerInterval);
+                    showModal({
+                        title: 'Tiempo finalizado',
+                        body: 'El tiempo asignado de 20 minutos para el simulacro de examen ha concluido. Se procederá a calificar tus respuestas.',
+                        confirmText: 'Ver Resultados',
+                        showCancel: false,
+                        onConfirm: () => finishQuiz()
+                    });
+                }
+            }, 1000);
+        }
+
+        // Renderizar la pregunta actual y sus 4 opciones
+        function renderQuestion() {
+            const idx = state.currentIndex;
+            const q = state.questions[idx];
+            const total = state.questions.length;
+            const selectedOptIdx = state.userAnswers[idx];
+            const hasAnswered = selectedOptIdx !== undefined;
+
+            // Actualizar barra de progreso
+            const answeredCount = Object.keys(state.userAnswers).length;
+            const percentComplete = Math.round((answeredCount / total) * 100);
+
+            document.getElementById('progress-question-text').textContent = `Pregunta ${idx + 1} de ${total}`;
+            document.getElementById('progress-answered-text').textContent = `${answeredCount} respondida${answeredCount === 1 ? '' : 's'}`;
+            document.getElementById('progress-percent-text').textContent = `${percentComplete}% completado`;
+            document.getElementById('progress-bar').style.width = `${percentComplete}%`;
+
+            // Encabezado del reactivo
+            document.getElementById('question-badge').textContent = state.randomize 
+                ? `Reactivo ${idx + 1} (Original #${q.id})` 
+                : `Reactivo #${idx + 1}`;
+            document.getElementById('question-text').textContent = q.question;
+
+            // Botón de marcar para revisar
+            updateFlagButtonUI();
+
+            // Renderizar opciones
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+
+            q.options.forEach((opt, optIdx) => {
+                const isSelected = selectedOptIdx === optIdx;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+
+                // Estilos base y condicionales según modo
+                let baseClasses = 'w-full text-left p-4 rounded-xl border-2 transition-all flex items-start gap-3.5 cursor-pointer ';
+                let badgeClasses = 'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 transition-colors ';
+
+                if (state.mode === 'study' && hasAnswered) {
+                    // En modo estudio, tras responder, bloquear cambios y mostrar verde/rojo
+                    btn.disabled = true;
+                    btn.classList.remove('cursor-pointer');
+                    btn.classList.add('cursor-default');
+
+                    if (opt.isCorrect) {
+                        baseClasses += 'border-emerald-500 bg-emerald-50/80 text-emerald-950';
+                        badgeClasses += 'bg-emerald-600 text-white';
+                    } else if (isSelected && !opt.isCorrect) {
+                        baseClasses += 'border-rose-500 bg-rose-50/80 text-rose-950';
+                        badgeClasses += 'bg-rose-600 text-white';
+                    } else {
+                        baseClasses += 'border-slate-200 bg-slate-50/50 text-slate-500 opacity-75';
+                        badgeClasses += 'bg-slate-200 text-slate-500';
+                    }
+                } else {
+                    // Modo examen o modo estudio aún sin responder
+                    if (isSelected) {
+                        baseClasses += 'border-forest-600 bg-forest-50 text-forest-950 shadow-xs';
+                        badgeClasses += 'bg-forest-700 text-white';
+                    } else {
+                        baseClasses += 'border-slate-200 bg-white hover:border-forest-300 hover:bg-cream-50 text-slate-800';
+                        badgeClasses += 'bg-slate-100 text-slate-700';
+                    }
+                }
+
+                btn.className = baseClasses;
+                btn.innerHTML = `
+                    <span class="${badgeClasses}">${letters[optIdx]}</span>
+                    <span class="text-sm sm:text-base leading-snug font-medium flex-grow">${opt.text}</span>
+                `;
+
+                if (!(state.mode === 'study' && hasAnswered)) {
+                    btn.addEventListener('click', () => handleSelectOption(optIdx));
+                }
+
+                optionsContainer.appendChild(btn);
+            });
+
+            // Mostrar/ocultar retroalimentación en Modo Estudio
+            const feedbackBox = document.getElementById('feedback-box');
+            if (state.mode === 'study' && hasAnswered) {
+                const chosenOption = q.options[selectedOptIdx];
+                const isCorrect = chosenOption.isCorrect;
+
+                feedbackBox.classList.remove('hidden');
+                if (isCorrect) {
+                    feedbackBox.className = 'mt-6 p-4 sm:p-5 rounded-xl border-l-4 border-emerald-600 bg-emerald-50 text-emerald-950 fade-in';
+                    document.getElementById('feedback-icon').innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>`;
+                    document.getElementById('feedback-title').textContent = '¡Respuesta Correcta!';
+                } else {
+                    feedbackBox.className = 'mt-6 p-4 sm:p-5 rounded-xl border-l-4 border-rose-600 bg-rose-50 text-rose-950 fade-in';
+                    document.getElementById('feedback-icon').innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>`;
+                    document.getElementById('feedback-title').textContent = 'Respuesta Incorrecta';
+                }
+                document.getElementById('feedback-explanation').textContent = q.explanation;
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Actualizar botones Anterior / Siguiente
+            document.getElementById('prev-btn').disabled = idx === 0;
+            const nextBtn = document.getElementById('next-btn');
+            if (idx === total - 1) {
+                nextBtn.innerHTML = `
+                    <span>Finalizar</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>`;
+            } else {
+                nextBtn.innerHTML = `
+                    <span>Siguiente</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>`;
+            }
+
+            renderNavGrid();
+        }
+
+        // Manejar selección de respuesta
+        function handleSelectOption(optIdx) {
+            state.userAnswers[state.currentIndex] = optIdx;
+            renderQuestion();
+        }
+
+        // Marcar / desmarcar pregunta para revisión
+        document.getElementById('flag-btn').addEventListener('click', () => {
+            const idx = state.currentIndex;
+            state.flagged[idx] = !state.flagged[idx];
+            updateFlagButtonUI();
+            renderNavGrid();
+        });
+
+        function updateFlagButtonUI() {
+            const isFlagged = !!state.flagged[state.currentIndex];
+            const flagBtn = document.getElementById('flag-btn');
+            const flagIcon = document.getElementById('flag-icon');
+            const flagText = document.getElementById('flag-text');
+
+            if (isFlagged) {
+                flagBtn.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-amber-400 bg-amber-100 text-amber-900 transition cursor-pointer';
+                flagIcon.classList.remove('text-slate-400');
+                flagIcon.classList.add('text-amber-600', 'fill-amber-500');
+                flagText.textContent = 'Marcada para revisar';
+            } else {
+                flagBtn.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border border-slate-300 bg-white text-slate-700 hover:bg-amber-50 hover:border-amber-400 hover:text-amber-800 transition cursor-pointer';
+                flagIcon.classList.add('text-slate-400');
+                flagIcon.classList.remove('text-amber-600', 'fill-amber-500');
+                flagText.textContent = 'Marcar para revisar';
+            }
+        }
+
+        // Renderizar matriz de navegación rápida (1 al 15)
+        function renderNavGrid() {
+            const navGrid = document.getElementById('nav-grid');
+            navGrid.innerHTML = '';
+
+            state.questions.forEach((q, idx) => {
+                const isCurrent = idx === state.currentIndex;
+                const isAnswered = state.userAnswers[idx] !== undefined;
+                const isFlagged = !!state.flagged[idx];
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = idx + 1;
+
+                let classes = 'h-10 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center relative ';
+
+                if (isFlagged) {
+                    classes += 'bg-amber-100 text-amber-900 border-2 border-amber-500 ';
+                } else if (isAnswered) {
+                    classes += 'bg-forest-600 text-white hover:bg-forest-700 ';
+                } else {
+                    classes += 'bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200 ';
+                }
+
+                if (isCurrent) {
+                    classes += 'ring-2 ring-offset-2 ring-forest-900 ';
+                }
+
+                btn.className = classes;
+                btn.addEventListener('click', () => {
+                    state.currentIndex = idx;
+                    renderQuestion();
+                });
+
+                navGrid.appendChild(btn);
+            });
+        }
+
+        // Botones Anterior y Siguiente
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (state.currentIndex > 0) {
+                state.currentIndex--;
+                renderQuestion();
+            }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (state.currentIndex < state.questions.length - 1) {
+                state.currentIndex++;
+                renderQuestion();
+            } else {
+                confirmFinishQuiz();
+            }
+        });
+
+        // Botón Finalizar y Calificar
+        document.getElementById('finish-btn').addEventListener('click', confirmFinishQuiz);
+
+        function confirmFinishQuiz() {
+            const answeredCount = Object.keys(state.userAnswers).length;
+            const total = state.questions.length;
+            const unanswered = total - answeredCount;
+
+            const message = unanswered > 0
+                ? `Aún tienes ${unanswered} pregunta${unanswered === 1 ? '' : 's'} sin responder. ¿Deseas finalizar la evaluación y calcular tu calificación ahora?`
+                : 'Has respondido los 15 reactivos. ¿Deseas finalizar la evaluación y ver tus resultados?';
+
+            showModal({
+                title: 'Finalizar Evaluación',
+                body: message,
+                confirmText: 'Sí, calificar ahora',
+                showCancel: true,
+                onConfirm: () => finishQuiz()
+            });
+        }
+
+        // Calcular y mostrar resultados finales
+        function finishQuiz() {
+            if (state.isFinished) return;
+            state.isFinished = true;
+            clearInterval(state.timerInterval);
+            state.endTime = Date.now();
+
+            // Calcular tiempo empleado
+            const elapsedSeconds = Math.max(1, Math.round((state.endTime - state.startTime) / 1000));
+            const formattedElapsed = formatTime(elapsedSeconds);
+
+            // Calcular aciertos y errores
+            let correctCount = 0;
+            state.questions.forEach((q, idx) => {
+                const chosenIdx = state.userAnswers[idx];
+                if (chosenIdx !== undefined && q.options[chosenIdx].isCorrect) {
+                    correctCount++;
+                }
+            });
+
+            const total = state.questions.length;
+            const incorrectCount = total - correctCount;
+            const scoreTen = ((correctCount / total) * 10).toFixed(1);
+            const scorePercent = Math.round((correctCount / total) * 100);
+
+            // Actualizar datos de estudiante en reporte
+            const studentInfoEl = document.getElementById('result-student-info');
+            if (state.studentName || state.studentId) {
+                const parts = [];
+                if (state.studentName) parts.push(`Estudiante: ${state.studentName}`);
+                if (state.studentId) parts.push(`Módulo/Paralelo: ${state.studentId}`);
+                studentInfoEl.textContent = parts.join('  •  ');
+            } else {
+                studentInfoEl.textContent = `Modalidad: ${state.mode === 'exam' ? 'Modo Examen' : 'Modo Estudio'}`;
+            }
+
+            // Badge de desempeño académico
+            const perfBadge = document.getElementById('performance-badge');
+            if (scorePercent >= 85) {
+                perfBadge.textContent = 'Desempeño Excelente';
+                perfBadge.className = 'self-start sm:self-center px-4 py-2 rounded-xl font-bold text-sm border bg-emerald-500/20 text-emerald-200 border-emerald-400/50';
+            } else if (scorePercent >= 60) {
+                perfBadge.textContent = 'Aprobado';
+                perfBadge.className = 'self-start sm:self-center px-4 py-2 rounded-xl font-bold text-sm border bg-gold-500/20 text-gold-300 border-gold-400/50';
+            } else {
+                perfBadge.textContent = 'Requiere Repaso';
+                perfBadge.className = 'self-start sm:self-center px-4 py-2 rounded-xl font-bold text-sm border bg-rose-500/20 text-rose-200 border-rose-400/50';
+            }
+
+            // Rellenar métricas
+            document.getElementById('score-ten').textContent = scoreTen;
+            document.getElementById('score-percent').textContent = `${scorePercent}%`;
+            document.getElementById('score-correct').textContent = correctCount;
+            document.getElementById('score-incorrect').textContent = incorrectCount;
+            document.getElementById('time-used').textContent = formattedElapsed;
+
+            // Generar revisión detallada pregunta por pregunta
+            const reviewList = document.getElementById('detailed-review-list');
+            reviewList.innerHTML = '';
+
+            state.questions.forEach((q, idx) => {
+                const chosenIdx = state.userAnswers[idx];
+                const isAnswered = chosenIdx !== undefined;
+                const isCorrect = isAnswered && q.options[chosenIdx].isCorrect;
+                const correctOption = q.options.find(o => o.isCorrect);
+                const chosenText = isAnswered ? q.options[chosenIdx].text : 'Sin responder';
+
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl p-5 sm:p-6 shadow-xs border-l-4 ${isCorrect ? 'border-emerald-500' : 'border-rose-500'} border border-slate-200`;
+
+                card.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pregunta ${idx + 1}</span>
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                            ${isCorrect ? '✓ Correcta' : '✕ Incorrecta'}
+                        </span>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-sm sm:text-base mb-4 leading-snug">${q.question}</h4>
+                    
+                    <div class="space-y-2 text-xs sm:text-sm mb-4">
+                        <div class="p-3 rounded-xl ${isCorrect ? 'bg-emerald-50/70 border border-emerald-200 text-emerald-950' : 'bg-rose-50/70 border border-rose-200 text-rose-950'}">
+                            <span class="font-bold block text-xs uppercase opacity-75 mb-0.5">Tu respuesta:</span>
+                            <span>${chosenText}</span>
+                        </div>
+                        ${!isCorrect ? `
+                        <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-emerald-950">
+                            <span class="font-bold block text-xs uppercase opacity-75 mb-0.5">Respuesta correcta:</span>
+                            <span>${correctOption.text}</span>
+                        </div>` : ''}
+                    </div>
+
+                    <div class="bg-cream-50 p-3.5 rounded-xl border border-cream-200 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        <strong class="text-forest-900">Retroalimentación académica:</strong> ${q.explanation}
+                    </div>
+                `;
+
+                reviewList.appendChild(card);
+            });
+
+            // Ocultar quiz y cabecera de tiempo, mostrar resultados
+            quizScreen.classList.add('hidden');
+            headerStatus.classList.add('hidden');
+            headerStatus.classList.remove('flex');
+            resultsScreen.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Copiar resumen de resultados al portapapeles (usando execCommand para compatibilidad en iFrames)
+        document.getElementById('copy-results-btn').addEventListener('click', () => {
+            const scoreTen = document.getElementById('score-ten').textContent;
+            const scorePercent = document.getElementById('score-percent').textContent;
+            const correct = document.getElementById('score-correct').textContent;
+            const incorrect = document.getElementById('score-incorrect').textContent;
+            const timeUsed = document.getElementById('time-used').textContent;
+            const badge = document.getElementById('performance-badge').textContent;
+
+            const lines = [
+                '=== EVALUACIÓN FORMATIVA EN LÍNEA - CARRERA AGROPECUARIA ===',
+                'Asignatura: Fundamentos de la Producción Agrícola',
+                'Tema: El proceso de domesticación en las plantas',
+                'Docente: Ing. Rommel Ramos Remache',
+                state.studentName ? `Estudiante: ${state.studentName}` : null,
+                state.studentId ? `Módulo/Paralelo: ${state.studentId}` : null,
+                `Modalidad: ${state.mode === 'exam' ? 'Modo Examen' : 'Modo Estudio'}`,
+                `Calificación: ${scoreTen} / 10 (${scorePercent}) - ${badge}`,
+                `Aciertos: ${correct} | Errores: ${incorrect}`,
+                `Tiempo empleado: ${timeUsed}`
+            ].filter(Boolean).join('\n');
+
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = lines;
+            tempTextarea.style.position = 'fixed';
+            tempTextarea.style.left = '-9999px';
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+
+            try {
+                document.execCommand('copy');
+                showToast('Resumen copiado al portapapeles');
+            } catch (err) {
+                showToast('No se pudo copiar automáticamente');
+            } finally {
+                document.body.removeChild(tempTextarea);
+            }
+        });
+
+        // Reiniciar simulador
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            clearInterval(state.timerInterval);
+            timerBox.classList.remove('text-rose-400', 'border-rose-500');
+            timerBox.classList.add('text-gold-400', 'border-gold-500/50');
+            resultsScreen.classList.add('hidden');
+            welcomeScreen.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
